@@ -1,6 +1,15 @@
+using investments_tracker;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddDbContext<InvestmentsTrackerContext>(options => 
+{
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:InvestmentsTracker"]);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
