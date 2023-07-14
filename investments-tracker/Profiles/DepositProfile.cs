@@ -4,12 +4,10 @@ using investments_tracker.ViewModels;
 
 namespace investments_tracker.Profiles;
 
-public class BrokerProfile : Profile
+public class DepositProfile : Profile
 {
-    public BrokerProfile()
+    public DepositProfile()
     {
-        CreateMap<CreateBrokerViewModel, Broker>();
-        CreateMap<UpdateBrokerViewModel, Broker>();
-        CreateMap<Broker, BrokerViewModel>();
+        CreateMap<Deposit, DepositViewModel>();
     }
 }
