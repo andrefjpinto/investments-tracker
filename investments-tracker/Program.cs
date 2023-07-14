@@ -1,9 +1,21 @@
 using investments_tracker;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = "https://andrefjpinto.eu.auth0.com/";
+    options.Audience = "investments-tracker";
+});
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddDbContext<InvestmentsTrackerContext>(options => 
@@ -27,6 +39,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

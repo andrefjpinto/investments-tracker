@@ -1,10 +1,12 @@
 using AutoMapper;
 using investments_tracker.Models;
 using investments_tracker.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace investments_tracker.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class BrokersController : ControllerBase
