@@ -57,6 +57,60 @@ namespace investments_tracker.Migrations
 
                     b.ToTable("brokers", (string)null);
                 });
+
+            modelBuilder.Entity("investments_tracker.Models.Deposit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("amount");
+
+                    b.Property<Guid>("BrokerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("now()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrokerId");
+
+                    b.ToTable("deposits", (string)null);
+                });
+
+            modelBuilder.Entity("investments_tracker.Models.Deposit", b =>
+                {
+                    b.HasOne("investments_tracker.Models.Broker", "Broker")
+                        .WithMany("Deposits")
+                        .HasForeignKey("BrokerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Broker");
+                });
+
+            modelBuilder.Entity("investments_tracker.Models.Broker", b =>
+                {
+                    b.Navigation("Deposits");
+                });
 #pragma warning restore 612, 618
         }
     }
